@@ -1,3 +1,4 @@
+const alphabet='abcdefghijklmnopqrstuvwxyz'
 class Message {
   username;
   message;
@@ -34,6 +35,12 @@ class Chat {
         this.current = 'left';
         p.remove();
         this.left.append(p);
+      } else {
+        setTimeout(() => {
+          if (this.right.scrollHeight > this.right.clientHeight) {
+            console.log('yup, the bug happened for', msg.username);
+          }
+        }, 1);
       }
     } else if (this.current === 'left') {
       this.left.append(p);
@@ -43,7 +50,7 @@ class Chat {
 
 let right = document.querySelector('.right.chat-page');
 let left = document.querySelector('.left.chat-page');
-let page = new Chat(left, right);
+window.page = new Chat(left, right);
 page.append(new Message('aaron', 'heyyyOOO'));
 page.append(new Message('aaron', 'heyyyOOO'));
 page.append(new Message('aaron', 'heyyyOOO'));
@@ -51,7 +58,47 @@ page.append(new Message('aaron', 'heyyyOOO'));
 page.append(new Message('aaron', 'heyyyOOO'));
 page.append(new Message('aaron', 'heyyyOOO'));
 
-for (let i = 0; i<50; i++) {
-  page.append(new Message('aaron', 'heyyyOOO'));
+let times = 20;
+function doit() {
+  if (times > 0) {
+    times--;
+    page.append(new randoMessage());
+    doit();
+    // setTimeout(doit, 10);
+  }
+}
+// doit();
+for (let i = 0; i<20; i++) {
+  page.append(new randoMessage());
+}
+// setTimeout(doit, 1);
+
+function many(f, times, sep='') {
+  let result = '' + f();
+  for (let i=1; i<times; i++) {
+    result += sep + f();
+  }
+  return result;
 }
 
+function randoNumber(lower, upper) {
+  return lower + Math.floor(Math.random()*(upper-lower));
+}
+
+function randoSentence() {
+  let len = randoNumber(1, 20);
+  return many(randoWord, len, ' ') + '.';
+}
+
+function randoWord() {
+  let len = randoNumber(3, 10);
+  return many(randoLetter, len);
+}
+
+function randoLetter() {
+  return alphabet[Math.floor(Math.random()*26)];
+}
+
+function randoMessage() {
+  return new Message(randoWord(), randoSentence());
+}
