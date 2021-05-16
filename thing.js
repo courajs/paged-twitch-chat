@@ -36,9 +36,11 @@ class Chat {
         p.remove();
         this.left.append(p);
       } else {
+        let sh = 0 + this.right.scrollHeight;
+        let ch = 0 + this.right.clientHeight;
         setTimeout(() => {
           if (this.right.scrollHeight > this.right.clientHeight) {
-            console.log('yup, the bug happened for', msg.username);
+            console.log('yup, the bug happened');
           }
         }, 1);
       }
@@ -48,6 +50,7 @@ class Chat {
   }
 }
 
+setTimeout(function() {
 let right = document.querySelector('.right.chat-page');
 let left = document.querySelector('.left.chat-page');
 window.page = new Chat(left, right);
@@ -58,20 +61,23 @@ page.append(new Message('aaron', 'heyyyOOO'));
 page.append(new Message('aaron', 'heyyyOOO'));
 page.append(new Message('aaron', 'heyyyOOO'));
 
-let times = 20;
-function doit() {
-  if (times > 0) {
-    times--;
-    page.append(new randoMessage());
-    doit();
-    // setTimeout(doit, 10);
+  let times = 50;
+  function doit() {
+    if (times > 0) {
+      times--;
+      page.append(new randoMessage());
+      setTimeout(doit, 10);
+    }
   }
-}
-// doit();
-for (let i = 0; i<20; i++) {
+  setTimeout(doit, 1);
+
+for (let i = 0; i<50; i++) {
   page.append(new randoMessage());
 }
-// setTimeout(doit, 1);
+}, 10);
+
+function randoMsg() {
+}
 
 function many(f, times, sep='') {
   let result = '' + f();
