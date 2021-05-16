@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Inter, Roobert, "Helvetica Neue", Helvetica, Arial, sans-serif
+}
+
+#chat {
+  height: 90vh;
+  display: flex;
+}
+
+.chat-page {
+  width: 400px;
+  margin: 10px;
+  border-radius: 3px;
+  border: 2px solid #747;
+}
+
+.chat-message {
+  margin: 8px;
+}
