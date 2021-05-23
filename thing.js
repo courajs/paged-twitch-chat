@@ -8,6 +8,14 @@ class Message {
     this.message = msg;
   }
 }
+
+const message_template = document.createElement('template');
+message_template.innerHTML = `
+    <p class="chat-message">
+      <span class="username"></span>
+      <span class="message-content"></span>
+    </p>
+`;
 class Chat {
   left;
   right;
@@ -21,14 +29,11 @@ class Chat {
 
   append(msg) {
     this.messages.push(msg);
-    let p = document.createElement('p');
+    let fragment = message_template.content.cloneNode(true);
+    let p = fragment.querySelector('.chat-message');
     p.classList.add("chat-message");
-    p.innerHTML = `
-      <span class="username">${msg.username}:</span>
-      <span class="message-content">
-        ${msg.message}
-      </span>
-    `;
+    p.querySelector('.username').textContent = msg.username;
+    p.querySelector('.message-content').textContent = msg.message;
     if (this.current === 'right') {
       this.right.append(p);
       if (this.right.scrollHeight > this.right.clientHeight) {
@@ -45,12 +50,6 @@ class Chat {
 let right = document.querySelector('.right.chat-page');
 let left = document.querySelector('.left.chat-page');
 window.page = new Chat(left, right);
-page.append(new Message('aaron', 'heyyyOOO'));
-page.append(new Message('aaron', 'heyyyOOO'));
-page.append(new Message('aaron', 'heyyyOOO'));
-page.append(new Message('aaron', 'heyyyOOO'));
-page.append(new Message('aaron', 'heyyyOOO'));
-page.append(new Message('aaron', 'heyyyOOO'));
 
 for (let i = 0; i<20; i++) {
   page.append(new randoMessage());
