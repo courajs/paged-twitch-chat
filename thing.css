@@ -12,10 +12,11 @@ html {
 }
 
 .chat-page {
-  width: 400px;
+  width: 300px;
   margin: 10px;
   border-radius: 3px;
   border: 2px solid #747;
+  flex-shrink: 0;
 }
 
 .chat-message {
